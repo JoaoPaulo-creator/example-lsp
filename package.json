@@ -1,0 +1,40 @@
+{
+  "name": "js-lsp",
+  "version": "0.1.0",
+  "description": "A standalone JavaScript Language Server (LSP over stdio) powered by the TypeScript LanguageService, built for Neovim.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "js-lsp": "dist/cli.js"
+  },
+  "main": "dist/server.js",
+  "files": [
+    "dist",
+    "nvim",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc -p tsconfig.json && node -e \"require('node:fs').chmodSync('dist/cli.js',0o755)\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json",
+    "test": "npm run build && node --test --test-reporter=spec \"test/**/*.test.ts\"",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "lsp",
+    "language-server",
+    "javascript",
+    "neovim"
+  ],
+  "dependencies": {
+    "typescript": "~6.0.3",
+    "vscode-languageserver": "^11.0.0",
+    "vscode-languageserver-textdocument": "^1.0.16"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2"
+  }
+}
